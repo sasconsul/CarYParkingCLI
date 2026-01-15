@@ -1,0 +1,34 @@
+@startuml
+choose:{+
+<b>an example
+choose one option
+()one
+()two
+[ok]
+}
+
+wait:{+
+<b>please wait
+operation in progress
+<&clock>
+[cancel]
+}
+
+success:{+
+<b>success
+congratulations!
+[ok]
+}
+
+error:{+
+<b>error
+failed, sorry
+[ok]
+}
+
+choose -right-> wait
+
+wait -right-> success
+wait -down-> error
+
+@enduml
