@@ -10,11 +10,8 @@ import java.util.Objects;
 public final class CarDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 0L;
-    private final String make;
-    private final String model;
-    private final Long year;
-    private final String color;
-    private final Long numberOfSeats;
+    private final String name;
+    private final Integer numberOfSeats;
     private final Long productionNumber;
     private final Double horsepower;
     private final Double mpg;
@@ -24,13 +21,10 @@ public final class CarDto implements Serializable {
     /**
      *
      */
-    public CarDto(String make, String model, Long year, String color, Long numberOfSeats, Long productionNumber,
+    public CarDto(String name, Integer numberOfSeats, Long productionNumber,
                   Double horsepower, Double mpg, Boolean convertible,
                   ParkingLot parkingLot) {
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.color = color;
+        this.name = name;
         this.numberOfSeats = numberOfSeats;
         this.productionNumber = productionNumber;
         this.horsepower = horsepower;
@@ -39,23 +33,11 @@ public final class CarDto implements Serializable {
         this.parkingLot = parkingLot;
     }
 
-    public String make() {
-        return make;
+    public String name() {
+        return name;
     }
 
-    public String model() {
-        return model;
-    }
-
-    public Long year() {
-        return year;
-    }
-
-    public String color() {
-        return color;
-    }
-
-    public Long numberOfSeats() {
+    public Integer numberOfSeats() {
         return numberOfSeats;
     }
 
@@ -84,10 +66,7 @@ public final class CarDto implements Serializable {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (CarDto) obj;
-        return Objects.equals(this.make, that.make) &&
-                Objects.equals(this.model, that.model) &&
-                Objects.equals(this.year, that.year) &&
-                Objects.equals(this.color, that.color) &&
+        return Objects.equals(this.name, that.name) &&
                 Objects.equals(this.numberOfSeats, that.numberOfSeats) &&
                 Objects.equals(this.productionNumber, that.productionNumber) &&
                 Objects.equals(this.horsepower, that.horsepower) &&
@@ -98,16 +77,13 @@ public final class CarDto implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(make, model, year, color, numberOfSeats, productionNumber, horsepower, mpg, convertible, parkingLot);
+        return Objects.hash(name, numberOfSeats, productionNumber, horsepower, mpg, convertible, parkingLot);
     }
 
     @Override
     public String toString() {
         return "CarDto[" +
-                "make=" + make + ", " +
-                "model=" + model + ", " +
-                "year=" + year + ", " +
-                "color=" + color + ", " +
+                "name=" + name + ", " +
                 "numberOfSeats=" + numberOfSeats + ", " +
                 "productionNumber=" + productionNumber + ", " +
                 "horsepower=" + horsepower + ", " +
@@ -115,5 +91,4 @@ public final class CarDto implements Serializable {
                 "convertible=" + convertible + ", " +
                 "parkingLot=" + parkingLot + ']';
     }
-
 }

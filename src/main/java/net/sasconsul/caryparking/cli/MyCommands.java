@@ -5,10 +5,20 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.Statement;
+
 @ShellComponent
 public class MyCommands {
     private static final Logger LOG = LoggerFactory
             .getLogger(MyCommands.class);
+
+    private final DataSource dataSource;
+
+    public MyCommands(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @ShellMethod(key = "hello-world", value="basic hello world command")
     public String helloWorld(
@@ -57,5 +67,20 @@ public class MyCommands {
 
 
         return result;
+    }
+
+    @ShellMethod(key = "empty-db", value="empty the database")
+    public String emptyDb() {
+        LOG.info("Emptying the database...");
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            String dropCommand = new StringBuilder("DROP ").append("ALL OBJECTS").toString();
+            statement.execute(dropCommand);
+            LOG.info("Database emptied successfully");
+            return "Database emptied successfully";
+        } catch (Exception e) {
+            LOG.error("Failed to empty the database", e);
+            return "Failed to empty the database: " + e.getMessage();
+        }
     }
 }
